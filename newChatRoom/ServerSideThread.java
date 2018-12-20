@@ -44,12 +44,12 @@ public class ServerSideThread implements Runnable {
 			out = new PrintWriter(currSocket.getOutputStream(), true);
 			in = new BufferedReader(new InputStreamReader(
 					currSocket.getInputStream()));
-			/*	
+			/*
 			 * can't use broadcast here, since it is only outputting to the specific client to enter their name,
 			 * whereas broadcast outputs it all to the connected sockets, asking for their names,
 			 * and that's not the goal here.
 			 */
-			
+
 			out.println("Server > Enter your name: ");
 			name = in.readLine().toUpperCase();
 
@@ -62,11 +62,11 @@ public class ServerSideThread implements Runnable {
 
 				// stdin is user input from current socket
 				String stdin = in.readLine();
-				
+
 				/* if the input is null, then the server implies the user has
 				 * disconnected, and calls disconnect()
 				 */
-				
+
 				if (stdin == null) {
 					disconnect();
 					return;
@@ -86,14 +86,14 @@ public class ServerSideThread implements Runnable {
 	public void disconnect() throws IOException
 	{
 		// removes the currentsocket from the arraylist of connected sockets.
-		for(int i = 0; i < ServerSide.CONNECTIONS.size(); i++) 
+		for(int i = 0; i < ServerSide.CONNECTIONS.size(); i++)
 			{
 				if (ServerSide.CONNECTIONS.get(i) == currSocket)
 				{
 					ServerSide.CONNECTIONS.remove(i);
 				}
 			}
-			
+
 			broadcast(name + " has disconnected",true);
 			timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar
 					.getInstance().getTime());
@@ -106,7 +106,7 @@ public class ServerSideThread implements Runnable {
 
 		timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar
 				.getInstance().getTime());
-		
+
 		if (server) {
 			serverOut += timeStamp + "["+ ANSI_PURPLE + "ServerThread/BORADCAST" + ANSI_RESET + "]: ";
 			userOut += "Server: ";
@@ -123,10 +123,8 @@ public class ServerSideThread implements Runnable {
 			{
 				out.println("you: " + x);
 			}
-			
-			
 			out.println(userOut + x);
-			
+
 
 		}
 	}
